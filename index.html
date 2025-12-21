@@ -98,10 +98,17 @@
             margin-top: 0;
         }
 
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 15px;
+            width: 100%;
+        }
+
         table {
             width: 100%;
+            min-width: 600px;
             border-collapse: collapse;
-            margin-top: 15px;
             background-color: white;
             border: 1px solid #dee2e6;
             font-size: 0.9em;
@@ -311,6 +318,7 @@
         <section id="schedule">
             <h2>Course Schedule</h2>
             
+            <div class="table-wrapper">
             <table>
                 <thead>
                     <tr>
@@ -422,6 +430,7 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
         </section>
 
         <section id="policies">
