@@ -136,12 +136,13 @@
             </section>
 
             <section class="short-answers">
-                <h2>Short Answer Questions (5 pts each)</h2>
+                <h2>Short Answer Questions [20 points total - 5 points each]</h2>
                 <ol>
                     <li>
-                        <strong>Data cleaning:</strong> Explain why replacing sensitive tokens (URLs, emails, phone numbers, etc.) with semantic placeholders (e.g., [url], [email]) is often better than deleting them outright. Reference the data cleaning goals from Task 1.2 and describe at least two downstream analyses that still benefit from knowing a placeholder existed.
+                        <strong>Question 1 (Data Cleaning)</strong><br>
+                        Explain why replacing sensitive tokens (URLs, emails, phone numbers, etc.) with semantic placeholders (e.g., [url], [email]) is often better than deleting them outright. Reference the data cleaning goals from Task 1.2 and describe at least two downstream analyses that still benefit from knowing a placeholder existed.
                         <div class="helper-block">
-                            <div class="helper-block-label">Helper code for Questions 2 &amp; 3</div>
+                            <div class="helper-block-label">Experiment Setup for Questions 2 &amp; 3</div>
                             <p style="margin: 0 0 8px 0;">Run the following cell to call your <code>generate_news_headline</code> function on both a positive and a negative review across a range of temperature values. Use the outputs to answer the next two questions.</p>
                             <div class="code-block">
 <pre><code>positive_review = reviews_df['text_clean'].iloc[0]
@@ -163,9 +164,18 @@ for temp in temperature_range:
                             </div>
                         </div>
                     </li>
-                    <li><strong>Sampling effects:</strong> After running the provided temperature sweep, describe how the headlines changed as the temperature increased. Discuss word choice, creativity, factual grounding, and what happened at the highest temperatures. Provide at least two concrete examples pulled from your generations.</li>
-                    <li><strong>Temperature selection:</strong> Propose an “ideal” temperature range for creative-but-accurate headline generation. Cite three specific LLM tasks that demand low temperatures and three that benefit from higher temperatures, explaining why temperature matters for each case.</li>
-                    <li><strong>Model comparison:</strong> Using the Part 3 evaluation framework, compare and contrast at least two Hugging Face checkpoints. Reference quantitative metrics (accuracy, latency, or other observations from <code>evaluate_model</code>) and qualitative behaviors, then recommend which model you would use for this task.</li>
+                    <li>
+                        <strong>Question 2 (Sampling Effects)</strong><br>
+                        Based on the outputs you generated above, describe how the headlines changed as the temperature increased. Discuss word choice, creativity, factual grounding, and what happened at the highest temperatures. Provide at least two concrete examples pulled from your generations.
+                    </li>
+                    <li>
+                        <strong>Question 3 (Temperature Selection)</strong><br>
+                        Given your experiment, propose an "ideal" temperature range for creative-but-accurate headline generation. Cite three specific LLM tasks that demand low temperatures and three that benefit from higher temperatures, explaining why temperature matters for each case.
+                    </li>
+                    <li>
+                        <strong>Question 4 (Comparing LLMs)</strong><br>
+                        Using the evaluation framework from Part 3, compare and contrast at least two Hugging Face checkpoints you profiled. Reference quantitative metrics (accuracy, latency, or other observations from <code>evaluate_model</code>) and qualitative behaviors. Discuss when you would choose one model over the other.
+                    </li>
                 </ol>
             </section>
 
