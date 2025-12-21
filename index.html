@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designing LLM Agents - CIS 1990</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <style>
+
+        .grading-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .grading-item {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border: 1px solid #dee2e6;
+            border-top: 4px solid #011f5b;
+            text-align: center;
+        }
+
+        .grading-item strong {
+            display: block;
+            font-size: 1.8em;
+            color: #011f5b;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .module {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #764ba2;
+        }
+
+        .module h3 {
+            margin-top: 0;
+            color: #764ba2;
+        }
+
+        .week {
+            padding: 8px 0;
+            padding-left: 20px;
+            border-left: 2px solid #ddd;
+            margin-left: 10px;
+        }
+
+        .assignment {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .assignment h3 {
+            margin-top: 0;
+            color: #667eea;
+        }
+
+        .assignment ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .assignment li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+
+        .class-info {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border: 1px solid #dee2e6;
+            border-left: 4px solid #011f5b;
+            margin-bottom: 30px;
+        }
+
+        .class-info p {
+            margin-bottom: 10px;
+            text-align: left;
+            font-size: 1.05em;
+        }
+
+        .class-info h2 {
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background-color: white;
+            border: 1px solid #dee2e6;
+            font-size: 0.9em;
+        }
+
+        th {
+            background-color: #011f5b;
+            color: white;
+            padding: 10px 10px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+        }
+
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 70px;
+            min-width: 70px;
+        }
+
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 100px;
+            min-width: 100px;
+        }
+
+        td {
+            padding: 10px 10px;
+            border-bottom: 1px solid #dee2e6;
+            vertical-align: middle;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .hw-release {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .hw-due {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        .spring-break {
+            background-color: #fff3cd;
+            font-style: italic;
+        }
+
+        .module-header {
+            background-color: #f8f9fa;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 0.9em;
+            padding: 8px 10px;
+            border-top: 2px solid #dee2e6;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .module-header td {
+            border-bottom: none;
+        }
+
+        #important-links ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 15px;
+        }
+
+        #important-links li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 1.05em;
+        }
+
+        #important-links li:before {
+            content: "→";
+            color: #011f5b;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        #important-links a {
+            color: #011f5b;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        #important-links a:hover {
+            border-bottom-color: #011f5b;
+        }
+
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .staff-member {
+            text-align: center;
+        }
+
+        .staff-image {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            display: block;
+            border: 3px solid #011f5b;
+        }
+
+        .staff-name {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #011f5b;
+            margin-bottom: 8px;
+        }
+
+        .staff-name a {
+            color: #011f5b;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .staff-name a:hover {
+            color: #990000;
+            text-decoration: underline;
+        }
+
+        .staff-role {
+            font-size: 0.95em;
+            color: #666;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+
+        .staff-email {
+            font-size: 0.95em;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .staff-hours {
+            font-size: 0.95em;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .staff-bio {
+            font-size: 0.95em;
+            color: #2c3e50;
+            line-height: 1.6;
+            text-align: center;
+            padding: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="course-number">CIS 1990</div>
+            <h1>Introduction to Designing LLM Agents</h1>
+            <div class="instructor">
+                <p><strong>Instructor:</strong> Shreya Havaldar</p>
+                <p><strong>Email:</strong> shreyah at seas.upenn.edu</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+        <section id="class-info">
+            <div class="class-info">
+                <h2>Class Information</h2>
+                <p><strong>Time:</strong> Tuesdays, 5:15 PM - 6:45 PM</p>
+                <p><strong>Location:</strong> Towne 337</p>
+                <p><strong>Semester:</strong> Spring 2026</p>
+            </div>
+        </section>
+
+        <section id="description">
+            <h2>Description</h2>
+            <p>Welcome to CIS-1990! In this course, you will learn how to practically instantiate and apply LLMs by designing intelligent, interactive agents. Moving beyond basic prompting, this course explores the full lifecycle of building LLM-powered applications, from reasoning and planning to extending capabilities with memory, retrieval, and tool integration. Through hands-on projects, you will learn techniques such as Retrieval-Augmented Generation (RAG) and multi-step agent design, while also addressing reliability and safety by diagnosing failure modes, implementing guardrails, and conducting systematic evaluations. The course culminates in a final project where you build and present your own LLM agent. Python proficiency is required, but no prior machine learning background is assumed.</p>
+        </section>
+
+        <section id="important-links">
+            <h2>Important Links</h2>
+            <ul>
+                <li><a href="syllabus.html">Syllabus</a></li>
+                <li><a href="#">EdStem</a></li>
+                <li><a href="#">Gradescope</a></li>
+            </ul>
+        </section>
+
+        <section id="schedule">
+            <h2>Course Schedule</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Week</th>
+                        <th>Date</th>
+                        <th>Lecture Topic</th>
+                        <th>Homework</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="module-header">
+                        <td colspan="4">Module 1: Interacting with LLMs</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Jan 20</td>
+                        <td>What is an LLM? A brief history of language modeling</td>
+                        <td><span class="hw-release">HW 1 Released</span></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Jan 27</td>
+                        <td>LLM architectures and training</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Feb 3</td>
+                        <td>How does an LLM generate text?</td>
+                        <td><span class="hw-due">HW 1 Due</span><br><span class="hw-release">HW 2 Released</span></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Feb 10</td>
+                        <td>Prompt engineering, reasoning techniques and memory management</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Feb 17</td>
+                        <td>RAG and human-in-the-loop</td>
+                        <td><span class="hw-due">HW 2 Due</span><br><span class="hw-release">HW 3 Released</span></td>
+                    </tr>
+                    <tr class="module-header">
+                        <td colspan="4">Module 2: Building an LLM Agent</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Feb 24</td>
+                        <td>Prompt chaining, planning, and routing</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Mar 3</td>
+                        <td>Calling external tools & prompting frameworks</td>
+                        <td><span class="hw-due">HW 3 Due</span><br><span class="hw-release">HW 4 Released</span></td>
+                    </tr>
+                    <tr class="spring-break">
+                        <td>-</td>
+                        <td>Mar 10</td>
+                        <td>Spring Break - No Class</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Mar 17</td>
+                        <td>Exception handling, guardrails, and safety patterns</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Mar 24</td>
+                        <td>Vibe coding</td>
+                        <td><span class="hw-due">HW 4 Due</span><br><span class="hw-release">Final Project Released</span></td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Mar 31</td>
+                        <td>Evaluating Agents</td>
+                        <td></td>
+                    </tr>
+                    <tr class="module-header">
+                        <td colspan="4">Module 3: LLM Agents in the real world</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>Apr 7</td>
+                        <td>Guest Lectures: Open problems with LLM agents</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>Apr 14</td>
+                        <td>Guest Lectures: Deploying LLM agents in industry</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>Apr 21</td>
+                        <td>Final Project presentations - Part 1</td>
+                        <td><span class="hw-due">Final Project Due</span></td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td>Apr 28</td>
+                        <td>Final Project presentations - Part 2</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="policies">
+            <h2>Assignments & Grading</h2>
+            <p>Assignments are due at 11:59 PM Eastern Time. Every student has 3 late days that may be used at their discretion across the semester; beyond this allowance, late work will not be accepted. Grades will be 45% homeworks, 45% final project, and 10% participation. Participation will be judged by attendance and engagement in class activities.</p>
+        </section>
+
+        <section id="staff">
+            <h2>Course Staff</h2>
+            <div class="staff-grid">
+                <div class="staff-member">
+                    <img src="assets/images/shreya.png" alt="Shreya Havaldar" class="staff-image">
+                    <div class="staff-name"><a href="https://shreyahavaldar.com/" target="_blank">Shreya Havaldar</a></div>
+                    <div class="staff-role">Instructor</div>
+                    <div class="staff-email">shreyah at seas.upenn.edu</div>
+                    <div class="staff-hours">Office Hours: TBD</div>
+                    <div class="staff-bio">Shreya is a 5th year PhD researching sociotechnical LLM alignment. She likes yoga, baking, NYT's connections, and her dog Plato (pictured above). She dislikes rate limits and celery.</div>
+                </div>
+                <div class="staff-member">
+                    <img src="assets/images/davis.png" alt="Davis Brown" class="staff-image">
+                    <div class="staff-name"><a href="https://davisrbrown.com/" target="_blank">Davis Brown</a></div>
+                    <div class="staff-role">TA</div>
+                    <div class="staff-email">davisbr at seas.upenn.edu</div>
+                    <div class="staff-hours">Office Hours: TBD</div>
+                    <div class="staff-bio">Davis is a 2nd year PhD working on AI safety. He likes running, surfing, and spearfishing. He dislikes added sugar.</div>
+                </div>
+                <div class="staff-member">
+                    <img src="assets/images/vitoria.png" alt="Vitoria Guardieiro" class="staff-image">
+                    <div class="staff-name"><a href="https://viguardieiro.github.io/" target="_blank">Vitoria Guardieiro</a></div>
+                    <div class="staff-role">TA</div>
+                    <div class="staff-email">vitoriag at seas.upenn.edu</div>
+                    <div class="staff-hours">Office Hours: TBD</div>
+                    <div class="staff-bio">Vitoria is a 2nd year PhD researching trustworthy ML. She likes cross-stitching and dislikes how much colder the east coast is than Brazil.</div>
+                </div>
+            </div>
+        </section>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+/* Shared Styles for CIS 1990 Course Website */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    line-height: 1.6;
+    color: #2c3e50;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+    background-color: white;
+    width: 100%;
+}
+
+header {
+    position: relative;
+    background-color: #011f5b;
+    color: white;
+    padding: 60px 0;
+    border-bottom: 4px solid #990000;
+    background-image: url('images/banner.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    min-height: 300px;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(1, 31, 91, 0.7);
+    z-index: 1;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+    position: relative;
+    z-index: 2;
+    box-sizing: border-box;
+}
+
+.course-number {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.instructor {
+    font-size: 1em;
+    margin-top: 15px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.instructor p {
+    margin-bottom: 5px;
+}
+
+.nav-link {
+    margin-top: 15px;
+}
+
+.nav-link a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.9;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.nav-link a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.main-content {
+    padding: 35px 40px;
+    box-sizing: border-box;
+}
+
+section {
+    margin-bottom: 35px;
+}
+
+h2 {
+    color: #011f5b;
+    font-size: 1.6em;
+    margin-bottom: 15px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #011f5b;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+h3 {
+    color: #2c3e50;
+    font-size: 1.2em;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+p {
+    margin-bottom: 12px;
+    text-align: left;
+    font-size: 1.05em;
+}
+
+ul {
+    margin-left: 30px;
+    margin-bottom: 15px;
+}
+
+li {
+    margin-bottom: 8px;
+    font-size: 1.05em;
+}
+
