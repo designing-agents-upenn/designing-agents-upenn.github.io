@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW 1 – Data Processing in Python + Intro to LLMs</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <style>
+        .overview, .short-answers, .submission-card {
+            background-color: #f8f9fa;
+            padding: 18px 20px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+        }
+
+        .main-content h1 {
+            margin-bottom: 8px;
+            font-size: 2.2rem;
+            text-shadow: none;
+            color: #011f5b;
+        }
+
+        .overview ul {
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+
+        .download-card {
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .download-card a {
+            background-color: #011f5b;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .download-card a:hover {
+            opacity: 0.9;
+        }
+
+        .short-answers ol {
+            padding-left: 20px;
+        }
+
+        .short-answers li {
+            margin-bottom: 12px;
+            line-height: 1.45;
+        }
+
+        .helper-block {
+            margin-top: 10px;
+            padding: 12px 16px;
+            border-left: 3px solid #e5e7eb;
+            background-color: #fff;
+            border: 1px solid #edeff2;
+            border-radius: 8px;
+        }
+
+        .helper-block-label {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #011f5b;
+        }
+
+        .code-block {
+            background-color: #fefefe;
+            color: #1f2933;
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: "SFMono-Regular", Consolas, "Lucida Console", monospace;
+            font-size: 0.78rem;
+            line-height: 1.35;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        .submission-card ul {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+
+        .submission-card li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="course-number">CIS 1990</div>
+            <h1>Introduction to Designing LLM Agents</h1>
+            <div class="instructor">
+                <p><strong>Instructor:</strong> Shreya Havaldar</p>
+                <p><strong>Email:</strong> shreyah at seas.upenn.edu</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <h1 style="margin-bottom: 12px;">Homework 1: Data Processing in Python + Intro to LLMs</h1>
+            <p style="margin: 0 0 4px 0;"><strong>Released:</strong> Tuesday, January 21</p>
+            <p style="margin: 0 0 18px 0;"><strong>Due:</strong> Tuesday, February 4 @ 11:59 PM ET (submit on Gradescope)</p>
+
+            <section class="overview">
+                <h2>Overview</h2>
+                <p>HW 1 introduces the core skills you'll need to work with LLMs for the rest of the course. You will:</p>
+                <ul>
+                    <li><strong>Module 1:</strong> Practice text-cleaning and data processing to transform raw text into cleaned model inputs.</li>
+                    <li><strong>Module 2:</strong> Use HuggingFace to interact with a chat model, and implement each step of the process from tokenization to generation.</li>
+                    <li><strong>Module 3:</strong> compare different LLM checkpoints using an evaluation framework to reason about accuracy and latency trade-offs.</li>
+                </ul>
+                <div class="download-card">
+                    <div>
+                        <strong>Starter Notebook</strong>
+                        <p>Includes instructions and starter code for the assignment.</p>
+                    </div>
+                    <a href="downloads/HW1.ipynb" download="HW1.ipynb">Download HW1.ipynb</a>
+                </div>
+            </section>
+
+            <section class="short-answers">
+                <h2>Short Answer Questions (5 pts each)</h2>
+                <ol>
+                    <li>
+                        <strong>Data cleaning:</strong> Explain why replacing sensitive tokens (URLs, emails, phone numbers, etc.) with semantic placeholders (e.g., [url], [email]) is often better than deleting them outright. Reference the data cleaning goals from Task 1.2 and describe at least two downstream analyses that still benefit from knowing a placeholder existed.
+                        <div class="helper-block">
+                            <div class="helper-block-label">Helper code for Questions 2 &amp; 3</div>
+                            <p style="margin: 0 0 8px 0;">Run the following cell to call your <code>generate_news_headline</code> function on both a positive and a negative review across a range of temperature values. Use the outputs to answer the next two questions.</p>
+                            <div class="code-block">
+<pre><code>positive_review = reviews_df['text_clean'].iloc[0]
+negative_review = reviews_df['text_clean'].iloc[2]
+temperature_range = [0.1, 0.2, 0.5, 1.0, 1.5, 2.0, 2.5]
+
+print("--- Positive Review Headlines ---")
+print(f"Original: {positive_review}\n")
+for temp in temperature_range:
+    headline = generate_news_headline(positive_review, temperature=temp)
+    print(f"Temp {temp:.1f}: {headline}")
+
+print("\n" + "-" * 50 + "\n")
+print("--- Negative Review Headlines ---")
+print(f"Original: {negative_review}\n")
+for temp in temperature_range:
+    headline = generate_news_headline(negative_review, temperature=temp)
+    print(f"Temp {temp:.1f}: {headline}")</code></pre>
+                            </div>
+                        </div>
+                    </li>
+                    <li><strong>Sampling effects:</strong> After running the provided temperature sweep, describe how the headlines changed as the temperature increased. Discuss word choice, creativity, factual grounding, and what happened at the highest temperatures. Provide at least two concrete examples pulled from your generations.</li>
+                    <li><strong>Temperature selection:</strong> Propose an “ideal” temperature range for creative-but-accurate headline generation. Cite three specific LLM tasks that demand low temperatures and three that benefit from higher temperatures, explaining why temperature matters for each case.</li>
+                    <li><strong>Model comparison:</strong> Using the Part 3 evaluation framework, compare and contrast at least two Hugging Face checkpoints. Reference quantitative metrics (accuracy, latency, or other observations from <code>evaluate_model</code>) and qualitative behaviors, then recommend which model you would use for this task.</li>
+                </ol>
+            </section>
+
+            <section class="submission-card">
+                <h2>Submission Instructions</h2>
+                <ul>
+                    <li><strong>Where:</strong> Submit on Gradescope under “HW 1”.</li>
+                    <li><strong>Due Date:</strong> Tuesday, February 4 @ 11:59 PM Eastern Time.</li>
+                    <li><strong>Files to Upload:</strong>
+                        <ul>
+                            <li><code>HW1.ipynb</code> — your notebook with all coding responses. Ensure it runs top-to-bottom without errors.</li>
+                            <li><code>HW1_short_answers.pdf</code> — a PDF of your responses to the short-answer questions.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Late policy:</strong> You may apply your remaining late days; otherwise late work is not accepted.</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
