@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW 2 – Prompt Engineering</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <style>
+        .overview, .short-answers, .submission-card {
+            background-color: #f8f9fa;
+            padding: 18px 20px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+        }
+
+        .main-content h1 {
+            margin-bottom: 8px;
+            font-size: 2.2rem;
+            text-shadow: none;
+            color: #011f5b;
+        }
+
+        .overview ul {
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+
+        .download-card {
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .download-card a {
+            background-color: #011f5b;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .download-card a:hover {
+            opacity: 0.9;
+        }
+
+        .short-answers ol {
+            padding-left: 20px;
+        }
+
+        .short-answers li {
+            margin-bottom: 12px;
+            line-height: 1.45;
+        }
+
+        .submission-card ul {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+
+        .submission-card li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="course-number">CIS 1990</div>
+            <h1>Introduction to Designing LLM Agents</h1>
+            <div class="instructor">
+                <p><strong>Instructor:</strong> Shreya Havaldar</p>
+                <p><strong>Email:</strong> shreyah at seas.upenn.edu</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <h1 style="margin-bottom: 12px;">Homework 2: Prompt Engineering</h1>
+            <p style="margin: 0 0 4px 0;"><strong>Released:</strong> Tuesday, February 3</p>
+            <p style="margin: 0 0 18px 0;"><strong>Due:</strong> Tuesday, February 17 @ 11:59 PM ET (submit on Gradescope)</p>
+
+            <section class="overview">
+                <h2>Notebook (70 pts)</h2>
+                <p>HW 2 focuses on prompt craftsmanship, reasoning scaffolds, and conversational memory. You will:</p>
+                <ul>
+                    <li><strong>Part 1:</strong> Configure a reusable Mistral-based agent with a clean API wrapper.</li>
+                    <li><strong>Part 2:</strong> Iterate from a bad transcript prompt to schema-driven extraction, ambiguity handling, and meta-prompting.</li>
+                    <li><strong>Part 3:</strong> Practice reasoning-first patterns (Chain-of-Thought and reflection personas) to stabilize answers.</li>
+                    <li><strong>Part 4:</strong> Build a three-layer memory stack (buffer, structured store, memory-aware agent) for a multi-turn travel concierge.</li>
+                </ul>
+                <div class="download-card">
+                    <div>
+                        <strong>Notebook</strong>
+                        <p>Includes instructions, starter code, and autograder checks for the assignment.</p>
+                    </div>
+                    <a href="index.html">Open HW2.ipynb in Colab</a>
+                </div>
+            </section>
+
+            <section class="short-answers">
+                <h2>Short Answer Questions (30 pts)</h2>
+                <ol>
+                    <li>
+                        <strong>Question 1 (Schema & Ambiguity)</strong><br>
+                        You explicitly defined the desired JSON schema and set rules to handle ambiguity. Imagine you are building an application that needs to process 1,000 different meeting transcripts every day. Why is a guaranteed, consistent JSON output essential for this application to work at scale? Then, describe a potential failure scenario for a real-world agent if its prompt did not include these how to deal with ambiguity.
+                    </li>
+                    <li>
+                        <strong>Question 2 (Meta-Prompting)</strong><br>
+                        You built a meta-prompt that teaches another agent how to craft the final instructions. Extend that idea to a multi-tool travel assistant that books flights, hotels, and restaurants from a vague request like &quot;Plan me a trip to Paris.&quot; Explain how meta-prompting could guide tool selection and output formatting.
+                    </li>
+                    <li>
+                        <strong>Question 3 (Chain-of-Thought)</strong><br>
+                        Beyond reaching the correct wizard/pet assignment, why should developers force the model to show its reasoning trace? If the puzzle output was wrong, explain how the narrated deductions would speed up debugging compared with a bare, incorrect JSON answer.
+                    </li>
+                    <li>
+                        <strong>Question 4 (Multi-Persona Reflection)</strong><br>
+                        The startup exercise makes the model pitch, critique, and then revise the idea. Why does this adversarial, multi-persona flow generate a stronger final concept than simply prompting &quot;Give me a good startup idea&quot;? How does forcing the model to argue with itself produce a more robust and well-vetted final idea compared to just asking it to &quot;generate a good startup idea&quot;?
+                    </li>
+                    <li>
+                        <strong>Question 5 (Buffer Limits & Recovery)</strong><br>
+                        Suppose the travel concierge must sustain 12-turn conversations but the token budget forces you to drop older turns. Design a buffering policy that preserves the right commitments when truncation happens. Describe (a) the criteria you would use to score each turn's importance, (b) how you would summarize or compress low-priority turns without losing critical constraints, and (c) how you would validate that the final itinerary still cites every constraint shared earlier. Justify your trade-offs.
+                    </li>
+                    <li>
+                        <strong>Question 6 (Memory Store & Memory-Aware Agent)</strong><br>
+                        After implementing memory extraction, store updates, and the memory-aware agent, analyze how each layer prevents regressions in a multi-turn travel planning session. Give an example of a real failure that would occur if (a) the extractor mislabeled a fact, or (b) the memory-aware agent forgot to cite the stored constraints in its final itinerary.
+                    </li>
+                </ol>
+            </section>
+
+            <section class="submission-card">
+                <h2>Submission Instructions</h2>
+                <ul>
+                    <li><strong>Where:</strong> Submit on Gradescope under “HW 2”.</li>
+                    <li><strong>Due Date:</strong> Thursday, February 20 @ 11:59 PM Eastern Time.</li>
+                    <li><strong>Files to Upload:</strong>
+                        <ul>
+                            <li><code>HW2.ipynb</code> — your notebook with all coding responses and autograder outputs.</li>
+                            <li><code>HW2_short_answers.pdf</code> — a PDF with the six short-answer responses.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Late policy:</strong> Late days apply automatically; otherwise late work is not accepted.</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
