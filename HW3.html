@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW 3 - Build Your First Agent</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <style>
+        .overview, .module-card, .submission-card {
+            background-color: #f8f9fa;
+            padding: 18px 20px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+        }
+
+        .main-content h1 {
+            margin-bottom: 8px;
+            font-size: 2.2rem;
+            text-shadow: none;
+            color: #011f5b;
+        }
+
+        .module-card ul, .submission-card ul, .overview ul {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+
+        .module-card li, .submission-card li, .overview li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .impl-subsection {
+            border-top: 1px solid #dfe3e8;
+            padding-top: 12px;
+            margin-top: 12px;
+        }
+
+        .impl-subsection:first-of-type {
+            border-top: none;
+            padding-top: 0;
+            margin-top: 0;
+        }
+
+        .impl-subsection h3 {
+            margin: 0 0 6px 0;
+            color: #011f5b;
+        }
+
+        .impl-subsection p {
+            margin: 0 0 6px 0;
+            line-height: 1.25;
+        }
+
+        .impl-subsection ul {
+            margin-top: 6px;
+            margin-bottom: 6px;
+        }
+
+        .impl-subsection li {
+            margin-bottom: 6px;
+            line-height: 1.25;
+        }
+
+        .download-card {
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .download-card a {
+            background-color: #011f5b;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .download-card a:hover {
+            opacity: 0.9;
+        }
+
+        .writeup-list li {
+            line-height: 1.2;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="course-number">CIS 1990</div>
+            <h1>Introduction to Designing LLM Agents</h1>
+            <div class="instructor">
+                <p><strong>Instructor:</strong> Shreya Havaldar</p>
+                <p><strong>Email:</strong> shreyah at seas.upenn.edu</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <h1 style="margin-bottom: 12px;">Homework 3: Build Your First Agent</h1>
+            <p style="margin: 0 0 4px 0;"><strong>Released:</strong> Friday, February 20 </p>
+            <p style="margin: 0 0 18px 0;"><strong>Due:</strong> Thursday, March 5 @ 11:59 PM ET (submit on Gradescope)</p>
+
+            <section class="overview">
+                <h2>Overview</h2>
+                <p>
+                    You will build a conversational agent that embodies a chosen celebrity. Your agent must (1) store information about the celebrity from public sources, (2) decide what to say using that stored information, (3) express the response in the celebrity's style, and (4) end the conversation naturally with a goodbye and sign-off.
+                </p>
+                <p>
+                    You will be provided with a repo that includes a skeleton codebase that defines the expected module boundaries and function/class interfaces. Keep your implementation consistent with those interfaces.
+                </p>
+                <div class="download-card">
+                    <div>
+                        <strong>Starter Code</strong>
+                        <p>Download the skeleton repo for HW3.</p>
+                    </div>
+                    <a href="assets/celebrity_agent.zip" download>Download celebrity_agent.zip</a>
+                </div>
+                <p style="margin-top: 12px;">
+                    <strong>You are welcome to add any additional functionality you want beyond the provided skeleton, as long as your final agent satisfies the core requirements.</strong> 
+                </p>
+            </section>
+
+            <section class="module-card">
+                <h2>Implementation Instructions</h2>
+
+                <div class="impl-subsection">
+                    <h3>Part 1: Memory Store</h3>
+                    <p><strong>Goal:</strong> Create a searchable memory of the celebrity based on public web content.</p>
+                    <p><strong>Requirements:</strong></p>
+                    <ul>
+                        <li>Collect public sources such as Wikipedia pages, interview transcripts, profiles, and talks.</li>
+                        <li>Convert sources into structured chunks represented by a <code>MemoryChunk</code> data structure.</li>
+                        <li>Store chunks in a <code>MemoryStore</code> object.</li>
+                        <li>Implement retrieval through <code>MemoryStore.retrieve(query)</code>.</li>
+                        <li>Use <code>build_memory_store(...)</code> and <code>load_memory_store(...)</code> as the top-level entry points for constructing/loading the store.</li>
+                    </ul>
+                    <p><strong>Output of this module:</strong> A retrieval interface that takes a query and returns relevant text chunks with metadata.</p>
+                </div>
+
+                <div class="impl-subsection">
+                    <h3>Part 2: Content Module</h3>
+                    <p><strong>Goal:</strong> Determine the substance of the response.</p>
+                    <p><strong>Requirements:</strong></p>
+                    <ul>
+                        <li>Parse the user query and identify what information is needed.</li>
+                        <li>Retrieve the relevant chunk(s) from the memory store.</li>
+                        <li>Produce a content plan through <code>make_content_plan(user_message, retrieved)</code>.</li>
+                        <li>Run one full content step with <code>content_step(memory, user_message)</code>.</li>
+                    </ul>
+                    <p><strong>Output of this module:</strong> A grounded content plan to pass into the style module.</p>
+                </div>
+
+                <div class="impl-subsection">
+                    <h3>Part 3: Style Module</h3>
+                    <p><strong>Goal:</strong> Express the content plan in the celebrity's linguistic and conversational style.</p>
+                    <p><strong>Requirements:</strong></p>
+                    <ul>
+                        <li>Define a style specification for your celebrity (tone, sentence structure, typical phrasing, conversational habits).</li>
+                        <li>Using <code>stylize(content_plan)</code>, turn the content module's plan into a stylized response.</li>
+                        <li>Preserve meaning: do not introduce new factual claims not present in the content plan or retrieved evidence.</li>
+                    </ul>
+                    <p><strong>Output of this module:</strong> A final user-facing message in the celebrity's style.</p>
+                </div>
+
+                <div class="impl-subsection">
+                    <h3>Part 4: Conversational Reasoning and Sign-off</h3>
+                    <p><strong>Goal:</strong> Track conversation state and end appropriately.</p>
+                    <p><strong>Requirements:</strong></p>
+                    <ul>
+                        <li>Decide when the conversation has reached a natural endpoint (e.g., user says "thanks" or "bye," or no open questions remain) and terminate the agent automatically.</li>
+                        <li>To help, you can optionally maintain basic conversation state (recent turns, whether the user asked an open question, whether a follow-up is pending).</li>
+                        <li>Implement end logic in <code>should_end(user_message)</code>.</li>
+                        <li>Implement in-character sign-off in <code>add_signoff(response)</code>.</li>
+                    </ul>
+                </div>
+
+                <div class="impl-subsection">
+                    <h3>Data and Configuration</h3>
+                    <ul>
+                        <li>The <code>data/</code> folder includes sample files (<code>sample_sources.json</code>, <code>sample_index.json</code>) that demonstrate expected formats.</li>
+                        <li>The LLM helper uses Mistral; <code>MISTRAL_API_KEY</code> must be set as an environment variable.</li>
+                        <li>Setup details are in the repo's <code>README.md</code>.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="submission-card">
+                <h2>Submission Guidelines</h2>
+                <p>
+                    You will submit the celebrity_agent folder (zipped), that contains your implementation for your chosen celebrity's persona agent. You should be able to download this folder, unzip it, and run <code>run_agent.py</code> to launch your agent.
+                </p>
+                <p>
+                    Along with your code, you will also submit a writeup, <code>celebrity_agent.pdf</code>, that describes all the design choices you made, along with your motivations for each.
+                </p>
+                <p><strong>Your writeup should describe:</strong></p>
+                <ul class="writeup-list">
+                    <li>Celebrity: the chosen celebrity, why you picked them, and what defines their voice.</li>
+                    <li>Data: what sources you used and your collection approach.</li>
+                    <li>Memory store: Data cleaning/chunking, how you implemented indexing, and how you implemented retrieval.</li>
+                    <li>Content module: Query parsing logic, retrieval strategy, and error handing (e.g. when no relevant info was found).</li>
+                    <li>Style module: Style specification, prompt engineering process, and content-preservation strategy.</li>
+                    <li>Running the agent: Conversation-ending logic, issues you encountered, etc.</li>
+                    <li>A short example transcript demonstrating retrieval, stylized output, and a natural goodbye.</li>
+                    <li>Any other design decisions you made, along with your motivation (temperature tuning, response length tuning, model selection, etc.).</li>
+                </ul>
+                <p style="margin-top: 12px;"><strong>Due Date:</strong> Thursday, March 5 @ 11:59 PM ET (submit on Gradescope under "HW 3")</p>
+                <p style="margin-top: 12px;"><strong>Files to Upload:</strong>
+                    <ul>
+                        <li><code>celebrity_agent.zip</code> — your zipped implementation for your chosen celebrity's persona agent.</li>
+                        <li><code>celebrity_agent.pdf</code> — your writeup describing all the design choices you made, along with your motivations for each.</li>
+                    </ul>
+                </p>
+                <p style="margin-top: 12px;"><strong>Late policy:</strong> Late days apply automatically; otherwise late work is not accepted.</p>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
